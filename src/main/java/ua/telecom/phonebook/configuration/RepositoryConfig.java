@@ -15,6 +15,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.TransactionManagementConfigurer;
 
 import javax.sql.DataSource;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Map;
 import java.util.Properties;
 
@@ -31,15 +33,6 @@ public class RepositoryConfig implements TransactionManagementConfigurer {
     @Value("${dataSource.driverClassName}")
     private String driver;
 
-    @Value("${dataSource.url}")
-    private String url;
-
-    @Value("${dataSource.username}")
-    private String username;
-
-    @Value("${dataSource.password}")
-    private String password;
-
     @Value("${jpa.show_sql}")
     private String show_sql;
 
@@ -51,10 +44,16 @@ public class RepositoryConfig implements TransactionManagementConfigurer {
 
 
     @Bean
-    public DataSource dataSource() {
+    public DataSource dataSource() throws URISyntaxException {
+        URI dbUri = new URI(System.getenv("DATABASE_URL"));
+
+        String username = dbUri.getUserInfo().split(":")[0];
+        String password = dbUri.getUserInfo().split(":")[1];
+        String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath();
+
         HikariConfig config = new HikariConfig();
         config.setDriverClassName(driver);
-        config.setJdbcUrl(url);
+        config.setJdbcUrl(dbUrl);
         config.setUsername(username);
         config.setPassword(password);
 
@@ -62,7 +61,7 @@ public class RepositoryConfig implements TransactionManagementConfigurer {
     }
 
     @Bean
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory() throws URISyntaxException {
         LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
         entityManagerFactoryBean.setDataSource(dataSource());
         entityManagerFactoryBean.setPackagesToScan("ua.telecom.phonebook.**.model");
