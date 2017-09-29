@@ -27,7 +27,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private UserServiceImpl userService;
 
     @Autowired
-//    @Qualifier("customDataSource")
     private DataSource dataSource;
 
     @Bean
