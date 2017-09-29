@@ -50,7 +50,7 @@ public class RepositoryConfig implements TransactionManagementConfigurer {
     private String use_sql_comments;
 
 
-    @Bean/*("customDataSource")*/
+    @Bean
     public DataSource dataSource() {
         HikariConfig config = new HikariConfig();
         config.setDriverClassName(driver);
