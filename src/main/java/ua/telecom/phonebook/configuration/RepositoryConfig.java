@@ -25,7 +25,7 @@ import java.util.Properties;
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories({"ua.telecom.phonebook.**.repository"})
-@PropertySource("classpath:db/datasource.properties")
+@PropertySource("classpath:db/${spring.profiles.active}.datasource.properties")
 public class RepositoryConfig implements TransactionManagementConfigurer {
 
     @Value("${dataSource.driverClassName}")
@@ -46,7 +46,7 @@ public class RepositoryConfig implements TransactionManagementConfigurer {
     @Value("${jpa.format_sql}")
     private String format_sql;
 
-    @Value("${jpa.format_sql}")
+    @Value("${jpa.use_sql_comments}")
     private String use_sql_comments;
 
 
