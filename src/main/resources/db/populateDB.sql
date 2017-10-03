@@ -4,8 +4,8 @@ DELETE FROM user_records;
 ALTER SEQUENCE global_seq RESTART WITH 100000;
 
 INSERT INTO users (name, surname, phonenumber, password)
-VALUES ('Sergiy', 'Dyrda', '+38(068)044-11-27', '$2a$10$JpweqaQFuIQXbtjtYi/7D.abqlboIi11UwRKewOGg/vCuSho9am1.'),
-  ('Anastasia', 'Kropyva', '+38(097)287-67-37', '$2a$10$FzlzXwKeJmYSBPlADh.x3uTnGv0WAqOVCkAQkmIq7pcRyvBa.wgau');
+VALUES ('Sergiy', 'Dyrda', '+38(068)044-12-28', '$2a$10$JpweqaQFuIQXbtjtYi/7D.abqlboIi11UwRKewOGg/vCuSho9am1.'), --password user_sergiy
+  ('Anastasia', 'Kropyva', '+38(097)287-65-36', '$2a$10$FzlzXwKeJmYSBPlADh.x3uTnGv0WAqOVCkAQkmIq7pcRyvBa.wgau'); --password anasteisha
 
 
 INSERT INTO user_roles (role, user_id) VALUES
